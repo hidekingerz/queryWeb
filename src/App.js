@@ -20,10 +20,21 @@ function useQuery() {
 
 function App() {
   let query = useQuery();
+  let authState = false;
+  const onLogin = () => {
+    console.log('login suru')
+    authState = true
+    console.log(authState)
+  }
+  const onLogout = () => {
+    console.log('logout suru')
+    authState = false
+    console.log(authState)
+  }
   return (
       <div className="App">
         <Container>
-          <MenuAppBar title='manual pages' isAuth={false} />
+          <MenuAppBar title='manual pages' isAuth={authState} onLogin={onLogin} onLogout={onLogout} />
           <Switch>
             <Route exact path='/' component={MainContent} />
             <Route path='/plane' component={Plane} />

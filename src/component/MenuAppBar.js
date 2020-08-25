@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import HelpIcon from '@material-ui/icons/Help';
 
+/**
+ * スタイル
+ * @type {(props?: any) => ClassNameMap<"root"|"menuButton"|"title">}
+ */
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -17,10 +21,19 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-    },
+    }
 }));
 
-const MenuAppBar = (props) => {
+/**
+ * アプリケーションのメニューバー
+ * @param title
+ * @param isAuth
+ * @param onLogin
+ * @param onLogout
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const MenuAppBar = ({ title, isAuth, onLogin, onLogout}) => {
     const classes = useStyles();
 
     return (
@@ -28,14 +41,14 @@ const MenuAppBar = (props) => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        {props.title}
+                        {title}
                     </Typography>
 
-                    {props.isAuth && (
-                        <Button color="inherit">Logout</Button>
+                    {isAuth && (
+                        <Button color="inherit" onClick={onLogout}>Logout</Button>
                     )}
-                    {!props.isAuth && (
-                        <Button color="inherit">Login</Button>
+                    {!isAuth && (
+                        <Button color="inherit" onClick={onLogin}>Login</Button>
                     )}
                     <IconButton color="inherit" aria-label="link" href="http://www.yahoo.co.jp" target="_blank">
                         <HelpIcon />
@@ -46,9 +59,18 @@ const MenuAppBar = (props) => {
     );
 }
 
-MenuAppBar.prototype = {
+MenuAppBar.protoType = {
     title: PropTypes.string,
-    isAuth: PropTypes.bool
+    isAuth: PropTypes.bool.isRequired,
+    onLogin: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired
+}
+
+MenuAppBar.defaultProps = {
+    /**
+     * title
+     */
+    title: 'no Title'
 }
 
 export default MenuAppBar
